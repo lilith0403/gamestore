@@ -1,0 +1,20 @@
+POST http://localhost:3333/games
+Content-Type: application/json
+
+{
+    "name": "Frog",
+    "genre": "OISAPO",
+    "rating": 7
+}
+
+###
+GET http://localhost:3333/games
+
+###
+PUT http://localhost:3333/games/whatsap
+Content-Type: application/json
+
+{
+    "name": "Frvogs"
+}
+
