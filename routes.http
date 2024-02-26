@@ -18,3 +18,6 @@ Content-Type: application/json
     "name": "Frvogs"
 }
 
+###
+DELETE http://localhost:3333/games/4950ce37-df1c-4d03-803d-c3aaf86138c4
+

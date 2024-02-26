@@ -51,7 +51,7 @@ export class PrismaGameRepository implements GameRepository {
         })
     }
 
-    async deleteOne(id:string):Promise<void>{
+    async deleteOne(id:string){
         await this.prisma.game.delete({
             where:{ id }
         })

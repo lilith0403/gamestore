@@ -73,7 +73,22 @@ export class GameService{
         }
     }
 
-    async delete(id:string):Promise<void>{
-        await this.gameRepository.deleteOne(id)
+    async delete(id:string):Promise<{sucess:boolean, message?:string}>{
+        try {
+            const found = await this.gameRepository.findOne(id)
+            if (!found) {
+                throw new HttpException(`Game with ID ${id} not found!`, HttpStatus.NOT_FOUND)
+            } else{
+                const game = await this.gameRepository.deleteOne(id)
+                return { sucess:true, message: `Game with ID ${id} deleted successfully!` }
+            }
+        } catch (error) {
+            if(error instanceof HttpException){
+                throw error
+            } else{
+                throw new HttpException(`Error deleting game with ID ${id}`, HttpStatus.INTERNAL_SERVER_ERROR)
+            }
+            
+        }
     }
 }
