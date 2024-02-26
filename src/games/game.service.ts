@@ -73,8 +73,7 @@ export class GameService{
         }
     }
 
-    async delete(id:string):Promise<any>{
+    async delete(id:string):Promise<void>{
         await this.gameRepository.deleteOne(id)
     }
-    
 }
