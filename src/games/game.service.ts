@@ -2,7 +2,6 @@
 
 import { HttpException, HttpStatus, Injectable, NotFoundException } from "@nestjs/common";
 import { Game } from "@prisma/client";
-import { generateKeySync } from "crypto";
 import { PrismaService } from "src/database/prisma.service";
 import { GameRepository } from "src/repositories/game-repository";
 

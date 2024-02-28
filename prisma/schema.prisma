@@ -16,3 +16,15 @@ model Game{
   genre String
   rating Float
 }
+
+model User{
+  id Int @id @default(autoincrement()) 
+  createdAt DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  email String @unique
+  hash String
+  hashRt String?
+
+  @@map("users")
+}

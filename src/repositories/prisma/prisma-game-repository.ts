@@ -3,7 +3,7 @@
 import { PrismaService } from "src/database/prisma.service";
 import { GameRepository } from "../game-repository";
 import { randomUUID } from "node:crypto";
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { Game } from "@prisma/client";
 
 

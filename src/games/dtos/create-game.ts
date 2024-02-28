@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 
-import { IsNotEmpty, Length } from "class-validator"
+import { IsNotEmpty, IsPositive, IsString, Length } from "class-validator"
 
 export class CreateGameDto {
 
@@ -10,15 +10,18 @@ export class CreateGameDto {
     @Length(3,40,{
         message: 'The name should be at least 3 characters'
     })
+    @IsString()
     name: string
 
     @IsNotEmpty({
         message: 'The game genre should not be empty'
     })
+    @IsString()
     genre: string
 
     @IsNotEmpty({
         message: 'The game rating should not be empty'
     })
+    @IsPositive()
     rating: number
 }
