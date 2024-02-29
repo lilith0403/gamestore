@@ -89,7 +89,6 @@ export class AuthService{
     }
 
 
-
     hashData(data:string) {
         return bcrypt.hash(data, 10)
     }

@@ -12,7 +12,7 @@ datasource db {
 
 model Game{
   id String @id
-  name String
+  name String @unique
   genre String
   rating Float
 }
