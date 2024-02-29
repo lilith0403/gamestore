@@ -23,8 +23,22 @@ export class PrismaGameRepository implements GameRepository {
         })
     }
 
-    async findAll():Promise<Game[]>{
-        return await this.prisma.game.findMany()
+    async findAll(
+        filter: { name?: string, genre?:string, rating?:number },
+        sortBy: 'name' | 'genre' | 'rating' = 'name',
+        sortOrder: 'asc' | 'desc' = 'asc'
+    ):Promise<Game[]>{
+        const games = await this.prisma.game.findMany({
+            where: {
+                name: filter.name,
+                genre: filter.genre,
+                rating: filter.rating
+            },
+            orderBy: {
+                [sortBy]: sortOrder
+            }
+        })
+        return games
     }
 
 

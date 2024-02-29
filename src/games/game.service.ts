@@ -29,12 +29,16 @@ export class GameService{
         }
     }
 
-    async findAll():Promise<{ data: Game[], message: string}>{
+    async findAll(
+        filter: { name?: string, genre?: string, rating?: number },
+        sortBy: 'name' | 'genre' | 'rating' = 'name',
+        sortOrder: 'asc' | 'desc' = 'asc',
+    ):Promise<{ data: Game[], message: string}>{
         try{
-            const games = await this.gameRepository.findAll()
+            const games = await this.gameRepository.findAll(filter, sortBy, sortOrder)
             return { message: 'Here are the games!', data: games }
         } catch (error) {
-            throw new HttpException (`Error searching the games`, HttpStatus.INTERNAL_SERVER_ERROR)
+            throw new HttpException (`Could not search the games!`, HttpStatus.INTERNAL_SERVER_ERROR)
         }
     }
 
