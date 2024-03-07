@@ -1,30 +1,29 @@
 /* eslint-disable prettier/prettier */
 
-import { HttpException, HttpStatus, Injectable, NotFoundException } from "@nestjs/common";
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { Game } from "@prisma/client";
-import { PrismaService } from "src/database/prisma.service";
-import { GameRepository } from "src/repositories/game-repository";
+import { GameRepository } from "../repositories/game-repository";
 
 
 @Injectable()
 export class GameService{
-    constructor(private gameRepository:GameRepository, private readonly prisma:PrismaService)
+    constructor(private gameRepository:GameRepository)
     {}
 
-    async create(name:string, genre:string, rating:number){
+    async create( name:string, genre:string, rating:number):Promise<{ success:boolean, message?:string }>{
         try {
             const gameExists = await this.gameRepository.findByName(name)
             if(gameExists){
-                throw new HttpException(`The game with name ${name} alredy exists`, HttpStatus.CONFLICT)
+                throw new HttpException(`The game with name ${name} alredy exists!`, HttpStatus.CONFLICT)
             } else{
-                const game = await this.gameRepository.create(name, genre,rating)
-                return {sucess:true, data:game, message: `Game with name ${name} created successfully!`}
+                const game = await this.gameRepository.create( name, genre,rating )
+                return {success:true, message: `Game with name ${name} created successfully!`}
             }
         } catch (error) {
             if (error instanceof HttpException) {
                 throw error
             } else {
-                throw new HttpException (`Error creating the game`, HttpStatus.INTERNAL_SERVER_ERROR)
+                throw new HttpException (`Error creating the game!`, HttpStatus.INTERNAL_SERVER_ERROR)
             }
         }
     }
@@ -46,14 +45,14 @@ export class GameService{
         try {
             const found = await this.gameRepository.findOne(id)
             if(!found){
-                throw new HttpException(`Game with ID: {${id}} not found`, HttpStatus.NOT_FOUND)
+                throw new HttpException(`Game with ID: '${id}' not found!`, HttpStatus.NOT_FOUND)
             }
             return {sucess:true, data:found, message: 'Game found successfully!'}
         } catch (error) {
             if(error instanceof HttpException){
                 throw error
             } else{
-                throw new HttpException (`Error finding game with ID: {${id}}`, HttpStatus.INTERNAL_SERVER_ERROR)
+                throw new HttpException (`Error finding game with ID: '${id}'`, HttpStatus.INTERNAL_SERVER_ERROR)
             }
         }
     }
@@ -62,7 +61,7 @@ export class GameService{
         try {
             const found = await this.gameRepository.findOne(id)
             if(!found){
-                throw new HttpException(`Game with ID {${id}} not found`, HttpStatus.NOT_FOUND)
+                throw new HttpException(`Game with ID: '${id}' not found!`, HttpStatus.NOT_FOUND)
             } else{
                 const game = await this.gameRepository.updateOne(id,name,genre,rating)
                 return { sucess:true, message:'Game updated successfully!', data:game }
@@ -71,7 +70,7 @@ export class GameService{
             if (error instanceof HttpException) {
                 throw error
             } else{
-                throw new HttpException (`Error updating game with ID: {${id}}`, HttpStatus.INTERNAL_SERVER_ERROR)
+                throw new HttpException (`Error updating the game with ID: '${id}'`, HttpStatus.INTERNAL_SERVER_ERROR)
             }
         }
     }
@@ -80,16 +79,16 @@ export class GameService{
         try {
             const found = await this.gameRepository.findOne(id)
             if (!found) {
-                throw new HttpException(`Game with ID ${id} not found!`, HttpStatus.NOT_FOUND)
+                throw new HttpException(`Game with ID: '${id}' not found!`, HttpStatus.NOT_FOUND)
             } else{
                 const game = await this.gameRepository.deleteOne(id)
-                return { sucess:true, message: `Game with ID ${id} deleted successfully!` }
+                return { sucess:true, message: `Game with ID: '${id}' deleted successfully!` }
             }
         } catch (error) {
             if(error instanceof HttpException){
                 throw error
             } else{
-                throw new HttpException(`Error deleting game with ID ${id}`, HttpStatus.INTERNAL_SERVER_ERROR)
+                throw new HttpException(`Error deleting game with ID: '${id}'`, HttpStatus.INTERNAL_SERVER_ERROR)
             }
             
         }

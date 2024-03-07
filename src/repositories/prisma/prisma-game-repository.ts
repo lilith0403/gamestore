@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 
-import { PrismaService } from "src/database/prisma.service";
+import { PrismaService } from "../../database/prisma.service";
 import { GameRepository } from "../game-repository";
 import { randomUUID } from "node:crypto";
 import { Injectable } from "@nestjs/common";
