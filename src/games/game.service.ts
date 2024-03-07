@@ -41,13 +41,13 @@ export class GameService{
         }
     }
 
-    async findOne(id:string): Promise<{sucess:boolean, message?:string, data?:Game}>{
+    async findOne(id:string): Promise<{success:boolean, message?:string, data?:Game}>{
         try {
             const found = await this.gameRepository.findOne(id)
             if(!found){
                 throw new HttpException(`Game with ID: '${id}' not found!`, HttpStatus.NOT_FOUND)
             }
-            return {sucess:true, data:found, message: 'Game found successfully!'}
+            return {success:true, data:found, message: 'Game found successfully!'}
         } catch (error) {
             if(error instanceof HttpException){
                 throw error
@@ -57,14 +57,14 @@ export class GameService{
         }
     }
 
-    async update(id:string, name:string, genre:string, rating:number):Promise<{sucess:boolean, data?:Game, message?:string}>{
+    async update(id:string, name:string, genre:string, rating:number):Promise<{success:boolean, data?:Game, message?:string}>{
         try {
             const found = await this.gameRepository.findOne(id)
             if(!found){
                 throw new HttpException(`Game with ID: '${id}' not found!`, HttpStatus.NOT_FOUND)
             } else{
                 const game = await this.gameRepository.updateOne(id,name,genre,rating)
-                return { sucess:true, message:'Game updated successfully!', data:game }
+                return { success:true, message:'Game updated successfully!', data:game }
             }
         } catch (error) {
             if (error instanceof HttpException) {
@@ -75,14 +75,14 @@ export class GameService{
         }
     }
 
-    async delete(id:string):Promise<{sucess:boolean, message?:string}>{
+    async delete(id:string):Promise<{success:boolean, message?:string}>{
         try {
             const found = await this.gameRepository.findOne(id)
             if (!found) {
                 throw new HttpException(`Game with ID: '${id}' not found!`, HttpStatus.NOT_FOUND)
             } else{
                 const game = await this.gameRepository.deleteOne(id)
-                return { sucess:true, message: `Game with ID: '${id}' deleted successfully!` }
+                return { success:true, message: `Game with ID: '${id}' deleted successfully!` }
             }
         } catch (error) {
             if(error instanceof HttpException){

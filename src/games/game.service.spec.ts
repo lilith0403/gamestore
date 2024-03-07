@@ -122,7 +122,7 @@ describe('GameService', () => {
 
             const result = await gameService.findOne(id)
 
-            expect(result.sucess).toBe(true)
+            expect(result.success).toBe(true)
             expect(result.data).toEqual(mockGame)
             expect(result.message).toEqual('Game found successfully!')
         })
@@ -162,7 +162,7 @@ describe('GameService', () => {
 
             const result = await gameService.update(id, name, genre, rating)
 
-            expect(result.sucess).toBe(true)
+            expect(result.success).toBe(true)
             expect(result.data).toEqual(mockGame)
             expect(result.message).toEqual('Game updated successfully!')
         })
@@ -211,7 +211,7 @@ describe('GameService', () => {
 
             const result = await gameService.delete(id)
 
-            expect(result.sucess).toBe(true)
+            expect(result.success).toBe(true)
             expect(result.message).toEqual(`Game with ID: '${id}' deleted successfully!`)
         })
         it('should throw a not found exception if game dont exists', async () => {

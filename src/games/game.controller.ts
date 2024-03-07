@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Body, Controller, Delete, Get, Header, HttpCode, NotFoundException, Param, Post, Put, Query } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Put, Query } from "@nestjs/common";
 import { CreateGameDto } from './dtos/create-game';
 import { UpdateGameDto } from "./dtos/update-game";
 import { GameService } from "./game.service";
@@ -10,9 +10,10 @@ export class GameController{
     constructor(private gameService: GameService) {}
     
 @Post()
-async create(@Body() body:CreateGameDto):Promise<{ sucess:boolean, message?:string }>{
+async create(@Body() body:CreateGameDto):Promise<{ success:boolean, message?:string }>{
     const { name, genre, rating } = body
-    return await this.gameService.create(name, genre, rating)
+    await this.gameService.create(name, genre, rating)
+    return
     }
 
 @Get()
@@ -28,20 +29,20 @@ async findAll(
 }
 
 @Get(':id')
-async findOne(@Param('id') id: string): Promise<{sucess:boolean, message?:string, data?:Game}>{
+async findOne(@Param('id') id: string): Promise<{success:boolean, message?:string, data?:Game}>{
     return this.gameService.findOne(id)
 }
 
 
 @Put(':id')
-async update(@Param('id') id: string, @Body()body:UpdateGameDto): Promise<{ sucess:boolean, data?:Game, message?:string }>{
+async update(@Param('id') id: string, @Body()body:UpdateGameDto): Promise<{ success:boolean, data?:Game, message?:string }>{
     const { name, genre, rating } = body
     return this.gameService.update(id, name, genre, rating)
     }
 
 
 @Delete(':id')
-async delete (@Param('id')id:string): Promise<{sucess: boolean, message?:string}>{
+async delete (@Param('id')id:string): Promise<{success: boolean, message?:string}>{
     return this.gameService.delete(id)
 }
 }
