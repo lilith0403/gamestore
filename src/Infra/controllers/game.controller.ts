@@ -1,8 +1,7 @@
-import { Body, Controller, Delete, Get, HttpCode, Param, ParseFloatPipe, ParseIntPipe, Patch, Post, Query } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Headers, HttpCode, Param, ParseIntPipe, Patch, Post, Query } from "@nestjs/common";
 import { GameService } from "../../App/services/game-services/game.service";
-import { GetCurrentUser, GetCurrentUserId } from "src/App/common/decorators";
+import { GetCurrentUserId } from "src/App/common/decorators";
 import { CreateGameDto, UpdateGameDto } from "../../App/dtos";
-import { Game } from "@prisma/client";
 
 @Controller('game')
 export class GameController{
@@ -65,11 +64,11 @@ export class GameController{
 
     @HttpCode(204)
     @Delete(':id')
-    delete(
+    async delete(
         @GetCurrentUserId() authorId:number,
-        @Param('id', ParseIntPipe) id:number
+        @Param('id', ParseIntPipe) id:number,
         ){
-            return this.gameService.delete(
+            return await this.gameService.delete(
                 authorId,
                 id
             )

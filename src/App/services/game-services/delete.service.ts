@@ -5,20 +5,14 @@ export async function deleteService(
     gameRepository: GameRepository,
     authorId:number, 
     id:number
-    ){
+    ):Promise<{message?: string, data: void}>{
         const game = await gameRepository.findOne(authorId, id)
-        console.log(game)
-        console.log(authorId)
-        console.log(id)
 
-        if (!game) {
-            throw new NotFoundException('Game not found!')
-        } else {
-            if (game.authorId !== id) {
-                throw new ForbiddenException('Acess to resource denied!')
-            }
+        if (!game || game.authorId !== authorId) {
+            throw new ForbiddenException('Access to resource denied!')
         }
 
-        await gameRepository.delete(id)  
-    }
+        const del = await gameRepository.delete(id)
 
+        return { message: 'Game deleted', data:del}
+    }
