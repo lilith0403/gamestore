@@ -4,7 +4,7 @@ import { GameModule } from './game.module';
 import { AuthModule } from './auth.module';
 import { PrismaModule } from './prisma.module';
 import { APP_GUARD } from '@nestjs/core';
-import { AtGuard } from '../App/common/guards';
+import { AtGuard, RolesGuard } from '../App/common/guards';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
@@ -13,7 +13,11 @@ import { ConfigModule } from '@nestjs/config';
   })],
   providers:[{
     provide: APP_GUARD,
-    useClass:AtGuard
+    useClass: AtGuard
+  },
+  {
+    provide: APP_GUARD,
+    useClass: RolesGuard
   }]
 })
 export class AppModule {}

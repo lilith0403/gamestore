@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -26,9 +26,14 @@ model User{
   email String @unique
   hash String
   hashRt String?
-  role String @default("USER")
+  role Role @default(USER)
   game Game[]
 
   @@map("users")
+}
+
+enum Role {
+  USER
+  ADMIN
 }
 
