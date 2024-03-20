@@ -53,12 +53,10 @@ export class GameRepository {
         }
 
     findOne(
-        authorId: number, 
         id:number
         ){
             return this.prisma.game.findFirst({
                 where: {
-                    authorId,
                     id: id
                     
                 }

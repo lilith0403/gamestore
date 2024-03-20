@@ -29,11 +29,9 @@ export class GameController{
 
     @Get(':id')
     findOne(
-        @GetCurrentUserId() authorId:number,
         @Param('id', ParseIntPipe) id:number
         ){
             return this.gameService.findOne(
-                authorId,
                 id
             )
         }

@@ -20,10 +20,9 @@ export class GameService{
     }
 
     async findOne(
-        authorId:number,
         id:number
     ){
-        return await findOneService(this.gameRepository, authorId, id)
+        return await findOneService(this.gameRepository, id)
     }
 
     async create(

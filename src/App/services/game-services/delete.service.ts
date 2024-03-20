@@ -6,9 +6,12 @@ export async function deleteService(
     authorId:number, 
     id:number
     ):Promise<{message?: string, data: void}>{
-        const game = await gameRepository.findOne(authorId, id)
+        const game = await gameRepository.findOne(id)
 
-        if (!game || game.authorId !== authorId) {
+        if (!game) {
+            throw new NotFoundException('Game not found!')
+        }
+        if (game.authorId !== authorId) {
             throw new ForbiddenException('Access to resource denied!')
         }
 

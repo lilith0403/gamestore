@@ -1,4 +1,4 @@
-import { BadRequestException, ForbiddenException, InternalServerErrorException } from "@nestjs/common"
+import { BadRequestException, ForbiddenException, InternalServerErrorException, NotFoundException } from "@nestjs/common"
 import { UpdateGameDto } from "src/App/dtos"
 import { GameRepository } from "src/Infra/repositories/game.repository"
 
@@ -9,10 +9,13 @@ export async function updateService(
     dto: UpdateGameDto
     ){
 
-        const game = await gameRepository.findOne(authorId, id)
+        const game = await gameRepository.findOne(id)
 
-        if (!game || game.authorId !== authorId) {
-            throw new ForbiddenException('Acess to resource denied!')
+        if (!game) {
+            throw new NotFoundException('Game not found!')
+        }
+        if (game.authorId !== authorId) {
+            throw new ForbiddenException('Access to resource denied!')
         }
         if (!dto) {
             throw new BadRequestException('Bad request!')

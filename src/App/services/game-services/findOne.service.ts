@@ -4,11 +4,10 @@ import { GameRepository } from "src/Infra/repositories/game.repository";
 
 export async function findOneService(
     gameRepository: GameRepository,
-    authorId: number, 
     id:number
     ){
         try {
-            const game = await gameRepository.findOne(authorId,id)
+            const game = await gameRepository.findOne(id)
             if (!game) {
                 throw new NotFoundException('Game not found!')
             }
